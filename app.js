@@ -1,59 +1,54 @@
-const express = require("express");
-const app = express();
-const port = process.env.PORT || 3001;
+const express = require('express')
+const app = express()
+const port = 3000;
+const path = require('path')
+var nerdamer = require('nerdamer'); 
+// Load additional modules. These are not required.  
+require('nerdamer/Solve');
 
-app.get("/", (req, res) => res.type('html').send(html));
+app.use(express.static('public'))
+app.listen(port, () => {
+  var url = `http://localhost:${port}`
+  console.log('Server listen on '+url);
+  var start = (process.platform == 'darwin'? 'open': process.platform == 'win32'? 'start': 'xdg-open');
+  require('child_process').exec(start + ' ' + url+'/editeur');
+})
+
+app.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname, '/acceuil.html'));
+});
+app.get('/acceuil', function(req, res) {
+  res.sendFile(path.join(__dirname, '/acceuil.html'));
+});
+app.get('/nerdamer/all.min.js', function(req, res) {
+  res.sendFile(path.join(__dirname, 'node_modules/nerdamer/all.min.js'));
+});
+app.get('/sketch.js', function(req, res) {
+  res.sendFile(path.join(__dirname, 'public/javascripts/sketch.js'));
+});
+app.get('/Sympy.js', function(req, res) {
+  res.sendFile(path.join(__dirname, 'public/javascripts/Sympy.js'));
+});
+app.get('/Forme.js', function(req, res) {
+  res.sendFile(path.join(__dirname, 'public/javascripts/Forme.js'));
+});
+app.get('/constantes.js', function(req, res) {
+  res.sendFile(path.join(__dirname, 'public/javascripts/constantes.js'));
+});
+app.get('/Historique.js', function(req, res) {
+  res.sendFile(path.join(__dirname, 'public/javascripts/Historique.js'));
+});
+app.get('/Circuit.js', function(req, res) {
+  res.sendFile(path.join(__dirname, 'public/javascripts/BackEnd/Circuit.js'));
+});
+app.get('/p5.min.js', function(req, res) {
+  res.sendFile(path.join(__dirname, 'public/javascripts/lib/p5.min.js'));
+});
+app.get('/Composant.js', function(req, res) {
+  res.sendFile(path.join(__dirname, 'public/javascripts/Composant.js'));
+});
+app.get('/editeur', function(req, res) {
+  res.sendFile(path.join(__dirname, '/editeur.html'));
+});
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
-
-
-const html = `
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Hello from Render!</title>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-    <script>
-      setTimeout(() => {
-        confetti({
-          particleCount: 100,
-          spread: 70,
-          origin: { y: 0.6 },
-          disableForReducedMotion: true
-        });
-      }, 500);
-    </script>
-    <style>
-      @import url("https://p.typekit.net/p.css?s=1&k=vnd5zic&ht=tk&f=39475.39476.39477.39478.39479.39480.39481.39482&a=18673890&app=typekit&e=css");
-      @font-face {
-        font-family: "neo-sans";
-        src: url("https://use.typekit.net/af/00ac0a/00000000000000003b9b2033/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("woff2"), url("https://use.typekit.net/af/00ac0a/00000000000000003b9b2033/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("woff"), url("https://use.typekit.net/af/00ac0a/00000000000000003b9b2033/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("opentype");
-        font-style: normal;
-        font-weight: 700;
-      }
-      html {
-        font-family: neo-sans;
-        font-weight: 700;
-        font-size: calc(62rem / 16);
-      }
-      body {
-        background: white;
-      }
-      section {
-        border-radius: 1em;
-        padding: 1em;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        margin-right: -50%;
-        transform: translate(-50%, -50%);
-      }
-    </style>
-  </head>
-  <body>
-    <section>
-      Hello from Render!
-    </section>
-  </body>
-</html>
-`
