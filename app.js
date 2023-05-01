@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const port = 4000;
+const port = process.env.PORT || 3001;
 const path = require('path')
 var nerdamer = require('nerdamer'); 
 // Load additional modules. These are not required.  
@@ -50,5 +50,3 @@ app.get('/Composant.js', function(req, res) {
 app.get('/editeur', function(req, res) {
   res.sendFile(path.join(__dirname, '/editeur.html'));
 });
-
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
